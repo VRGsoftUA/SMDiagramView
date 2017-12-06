@@ -15,7 +15,7 @@ Meet cute and very flexibility library for iOS application for different data vi
 
 ## Be sure to read all instructions carefully.
 
-#Installing with [CocoaPods](https://cocoapods.org)
+### Installing with [CocoaPods](https://cocoapods.org)
 
 ```ruby
 use_frameworks! 
@@ -24,7 +24,7 @@ pod 'SMDiagramViewSwift', '~> 1.0'
 ```
 
 
-#Usage
+### Usage
 
 Add a `UIView` instance in your .storyboard or .xib, set `SMDiagramView` class, connect `IBOutlet` and add `DataSource`
 
@@ -101,17 +101,17 @@ Setup `SMDiagramView` if need
 ```
 
 
-#Compatibility
+## Compatibility
   
   * IOS 9-11
   
-# Changelog
+## Changelog
 
 ### Version: 1.0
 
   * Initial Build
 
-# Contributors
+## Contributors
 
   * Contributors and stars are welcome.
 
