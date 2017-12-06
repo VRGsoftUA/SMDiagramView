@@ -2,6 +2,8 @@
 
 Meet cute and very flexibility library for iOS application for different data view in one circle diagram. The opportunity of transformation of this sample make application interactive, colorful with wow-effect.
 
+### [CocoaControls](https://www.cocoacontrols.com/controls/smdiagramview)
+
 ## Images
 
 ![](demo.gif)
