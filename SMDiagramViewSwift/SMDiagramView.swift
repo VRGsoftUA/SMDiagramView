@@ -83,6 +83,15 @@ import UIKit
     public var colorOfSegments: UIColor = .black
     public var viewsOffset: CGPoint = .zero
     public var separatorWidh: CGFloat = 1.0
+    
+    private var isFullCircle: Bool
+    {
+        get
+        {
+            return endAngle - startAngle >= 2 * .pi
+        }
+    }
+    
     private var _separatorColor: UIColor
     {
         get
@@ -128,7 +137,20 @@ import UIKit
         {
             if let c = UIGraphicsGetCurrentContext()
             {
-                c.addArc(center: centerOfCircle, radius: model.radiusOfSegment, startAngle: model.startAngle, endAngle: model.endAngle, clockwise: false)
+                var start : CGFloat = model.startAngle
+                var end : CGFloat = model.endAngle
+                if diagramViewMode == .arc {
+                    let isFirst = isNthModel(object: model, objects: models, nth: 0)
+                    let isLast = isNthModel(object: model, objects: models, nth: models.count-1)
+                    if  isFullCircle || !isFirst, let privious = getPrivious(object: model, objects: models) {
+                        start = privious.separatorEndAngle
+                    }
+                    
+                    if isFullCircle || !isLast {
+                        end = model.separatorStartAngle
+                    }
+                }
+                c.addArc(center: centerOfCircle, radius: model.radiusOfSegment, startAngle: start, endAngle: end, clockwise: false)
                 c.setLineWidth(model.lineWidth)
                 if let color = model.color
                 {
@@ -153,7 +175,9 @@ import UIKit
         
         for model in models
         {
-            if let c = UIGraphicsGetCurrentContext()
+            let isLast = (isNthModel(object: model, objects: models, nth: models.count-1))
+            
+            if let c = UIGraphicsGetCurrentContext(), (!isFullCircle || !isLast)
             {
                 c.addArc(center: centerOfCircle, radius: model.radiusOfSegment, startAngle: model.separatorStartAngle, endAngle: model.separatorEndAngle, clockwise: false)
                 c.setLineWidth(model.separatorLineWidth)
@@ -259,7 +283,7 @@ import UIKit
                 let originalProportion: CGFloat = 1.0/CGFloat(count)
                 
                 assert(CGFloat(roundf(Float(originalProportion*100))/100) >= minProportion, "SMDiagramView. 1/count should not be less minProportion\ncount = \(count)\nminProportion = \(minProportion)")
-
+                
                 var result = [SMDiagramViewModel]()
                 var totalProportion: CGFloat = 0.0
                 
@@ -312,10 +336,25 @@ import UIKit
         layoutIfNeeded()
         setNeedsDisplay()
     }
-    
 }
 
-fileprivate class SMDiagramViewModel
+fileprivate func isNthModel(object : SMDiagramViewModel, objects : [SMDiagramViewModel], nth: Int) -> Bool {
+    return objects[nth] == object
+}
+
+fileprivate func getPrivious(object : SMDiagramViewModel, objects : [SMDiagramViewModel]) -> SMDiagramViewModel? {
+    if let index = objects.index(of: object) {
+        if index == 0 {
+            return objects[objects.count - 1]
+        }
+        return objects[(index - 1) % objects.count]
+    } else {
+        return nil
+    }
+}
+
+
+fileprivate class SMDiagramViewModel : Equatable
 {
     var view: UIView?
     var color: UIColor?
@@ -437,4 +476,9 @@ fileprivate class SMDiagramViewModel
             return lineWidth + 2.0 / UIScreen.main.scale
         }
     }
+    
+    static func ==(lhs: SMDiagramViewModel, rhs: SMDiagramViewModel) -> Bool {
+        return lhs.startAngle == rhs.startAngle && lhs.endAngle == rhs.endAngle
+    }
 }
+
