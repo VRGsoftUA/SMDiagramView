@@ -26,7 +26,7 @@ import UIKit
     case arc, segment
 }
 
-@objc public class SMDiagramView: UIView
+@objcMembers public class SMDiagramView: UIView
 {
     private var models = [SMDiagramViewModel]()
     
@@ -193,7 +193,7 @@ import UIKit
     {
         if let view = emptyView
         {
-            bringSubview(toFront: view)
+            bringSubviewToFront(view)
             view.alpha = 1.0
             view.isHidden = false
         }
