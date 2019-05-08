@@ -20,13 +20,13 @@ Pod::Spec.new do |s|
 
     #root
         s.name      = 'SMDiagramViewSwift'
-        s.version   = '1.0.0'
+        s.version   = '1.0.1'
         s.summary   = 'SMDiagramViewSwift descriptions'
         s.license   = { :type => 'Apache', :file => 'LICENSE.txt' }
 
         s.homepage  = 'https://github.com/VRGsoftUA/SMDiagramView'
         s.authors   = {'pawlo2102' => 'pawlo2102@gmail.com'}
-        s.source    = { :git => 'https://github.com/VRGsoftUA/SMDiagramView.git', :branch => 'master', :tag => '1.0.0' }
+        s.source    = { :git => 'https://github.com/VRGsoftUA/SMDiagramView.git', :branch => 'master', :tag => '1.0.1' }
 
     #platform
         s.platform = :ios
