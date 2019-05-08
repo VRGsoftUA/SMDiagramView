@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
     #root
         s.name      = 'SMDiagramView'
-        s.version   = '1.0.0'
+        s.version   = '1.0.1'
         s.summary   = 'SMDiagramView descriptions'
         s.license   = { :type => 'Apache', :file => 'LICENSE.txt' }
 
